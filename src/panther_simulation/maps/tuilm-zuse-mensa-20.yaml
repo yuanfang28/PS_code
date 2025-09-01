@@ -1,0 +1,6 @@
+image: tuilm-zuse-mensa-20.pgm
+resolution: 0.09478076437554828
+origin: [0.000000, 0.00000, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196

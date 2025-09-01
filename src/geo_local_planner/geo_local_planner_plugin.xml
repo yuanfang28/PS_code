@@ -1,0 +1,7 @@
+<library path="lib/libgeo_local_planner">
+  <class name="geo_local_planner/GeoPlannerROS" type="geo_local_planner::GeoPlannerROS" base_class_type="nav_core::BaseLocalPlanner">
+    <description>
+      A implementation of a local planner using either a nmpc approach based on configuration parameters.
+    </description>
+  </class>
+</library>

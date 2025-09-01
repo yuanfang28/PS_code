@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="panther" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:arg name="use_sim" default="false" />
+  <xacro:arg name="use_gpu" default="false" />
+  <xacro:arg name="dual_bat" default="false" />
+  <xacro:arg name="imu_pos_x" default="0.169" />
+  <xacro:arg name="imu_pos_y" default="0.025" />
+  <xacro:arg name="imu_pos_z" default="0.092" />
+  <xacro:arg name="imu_rot_r" default="0.0" />
+  <xacro:arg name="imu_rot_p" default="0.0" />
+  <xacro:arg name="imu_rot_y" default="-1.57" />
+  <xacro:arg name="wheel_config_path" default="$(find panther_description)/config/WH01.yaml" />
+  <xacro:arg name="simulation_engine" default="gazebo-classic" />
+  <xacro:arg name="use_ros_control" default="false" />
+
+  <xacro:include filename="$(find panther_description)/urdf/panther_macro.urdf.xacro" ns="husarion" />
+  <xacro:husarion.panther_robot
+    use_sim="$(arg use_sim)"
+    dual_bat="$(arg dual_bat)"
+    imu_pos_x="$(arg imu_pos_x)"
+    imu_pos_y="$(arg imu_pos_y)"
+    imu_pos_z="$(arg imu_pos_z)"
+    imu_rot_r="$(arg imu_rot_r)"
+    imu_rot_p="$(arg imu_rot_p)"
+    imu_rot_y="$(arg imu_rot_y)"
+    wheel_config_path="$(arg wheel_config_path)"
+    simulation_engine="$(arg simulation_engine)"
+    use_ros_control="$(arg use_ros_control)" />
+
+  <!-- include file with definition of xacro macro of sensor -->
+<!--   <xacro:include filename="$(find ros_components_description)/urdf/slamtec_rplidar_s1.urdf.xacro" ns="lidar" /> -->
+
+  <!-- evaluate the macro and place the sensor on robot -->
+  <!--<xacro:lidar.slamtec_rplidar_s1
+  parent_link="cover_link"
+  xyz="0.185 0 0.0"
+  rpy="0.0 0.0 0.0"
+  use_gpu="true"
+  tf_prefix="front" 
+  topic="laser/front/scan" 
+  simulation_engine="$(arg simulation_engine)" />-->
+
+    <!-- Laser link and plugin -->
+  <xacro:include filename="$(find ros_components_description)/urdf/hokuyo.urdf.xacro"/>
+  <xacro:hokuyo_laser xyz="0.2 0 0.15" 
+                rpy="0 0 0"
+                parent="cover_link">
+  </xacro:hokuyo_laser>
+
+  <xacro:include filename="$(find ros_components_description)/urdf/external_antenna.urdf.xacro" ns="antenna" />
+  <xacro:antenna.external_antenna
+      parent_link="base_link"
+      frame_id="gps_link"
+      xyz="0.0 0.0 0.6"
+      rpy="0.0 0.0 0.0" />
+
+  <xacro:arg name="use_nominal_extrinsics" default="true"/>
+  <xacro:arg name="add_plug" default="true" />
+  <xacro:arg name="use_mesh" default="true" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+  
+<!--   <link name="base_link" /> -->
+  <xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)">
+    <origin xyz="0.39 0 0.597" rpy="0 0.314 0"/>
+  </xacro:sensor_d435>
+
+  <!-- <xacro:include filename="$(find ros_components_description)/urdf/intel_realsense_d435.urdf.xacro" ns="camera" />
+  <xacro:camera.intel_realsense_d435
+      parent_link="front_light_link"
+      xyz="-0.01 0.0 -0.01"
+      rpy="-${pi/2} -${pi/2} 0.0" />   -->
+
+</robot>

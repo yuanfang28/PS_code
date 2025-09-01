@@ -1,0 +1,2 @@
+geo_local_planner:panther_description:panther_gazebo:panther_simulation
+-DCATKIN_DEVEL_PREFIX=/home/yuanfang/ros_ws/devel -DCMAKE_INSTALL_PREFIX=/home/yuanfang/ros_ws/install -G Unix Makefiles

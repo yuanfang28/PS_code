@@ -1,0 +1,16 @@
+local_costmap:
+  global_frame: odom
+  rolling_window: true
+  resolution: 0.05 
+  width: 4.0   
+  height: 4.0  
+
+
+  plugins:
+    # - {name: static_layer,            type: "costmap_2d::StaticLayer"}
+
+    - {name: obstacle_layer,          type: "costmap_2d::ObstacleLayer"} #NonPersistentVoxelLayer
+    - {name: inflation_layer,      type: "costmap_2d::InflationLayer"}
+    # - {name: obstacle_detection_layer,      type: "obstacle_detection_layer::ObstacleDetectionLayer"}
+
+

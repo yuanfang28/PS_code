@@ -1,0 +1,33 @@
+GeoPlannerROS:
+  odom_topic: odom
+
+  # Trajectory
+
+  max_local_plan_lookahead_dist: 6.0
+  local_plan_viapoint_sep: 0.1
+  local_plan_prune_distance: 1
+  local_plan_goal_sep: 0.1
+
+  # Robot
+
+  max_vel_x: 2
+  max_vel_x_backwards: 0
+  max_vel_theta: 0.4
+  acc_lim_x: 0.5
+  acc_lim_theta: 0.52
+  turn_around_priority: True
+  stop_dist: 0.5
+  dec_dist: 1.0
+  
+
+  # GoalTolerance
+
+  xy_goal_tolerance: 1
+  yaw_goal_tolerance: 0.1
+
+  # Optimization
+
+  k_rho: 3.0
+  k_alpha: -6.0
+  k_phi: -1.0
+

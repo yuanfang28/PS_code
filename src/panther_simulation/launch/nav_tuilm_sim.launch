@@ -1,0 +1,112 @@
+<launch>
+  <arg name="use_rviz" default="true" />
+  <arg name="rviz_config" default="$(find panther_simulation)/config/rviz_navigation.rviz" />
+  <arg name="obstacle_detect" default="true" /> 
+  <arg name="server_mode" default="false" />
+  <arg name="use_teleop" default="false" />
+  <arg name="initial_latitude" default="50.682070" />
+  <arg name="initial_longitude" default="10.940413" />
+  <arg name="initial_heading" default="0.0" />
+  <arg name="use_camera" default="false" />
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+
+
+
+  <!--  ************** Gazebo (Robot and World model) ***************  -->
+  <include file="$(find panther_simulation)/launch/nav_sim_setup.launch" unless="$(arg server_mode)">
+    <arg name="initial_latitude" value="$(arg initial_latitude)" />
+    <arg name="initial_longitude" value="$(arg initial_longitude)" />
+    <arg name="initial_heading" value="$(arg initial_heading)" />
+    <arg name="use_camera" value="$(arg use_camera)" />
+  </include>
+
+  <!-- Map service -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find panther_simulation)/maps/empty.yaml" output="screen">
+      <param name="frame_id" value="map"/>
+  </node>
+
+  <!--  ************** Localization **************  -->
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+      <rosparam file="$(find panther_simulation)/config/amcl_params.yaml" command="load" />
+      <param name="initial_pose_x"            value="$(arg x_pos)"/>
+      <param name="initial_pose_y"            value="$(arg y_pos)"/>
+      <param name="initial_pose_a"            value="$(arg yaw)"/>
+  </node>
+  <!--rosparam command="load" file="$(find panther_simulation)/config/ekf_sim_params.yaml" />
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_odom"/>
+  </node>
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
+    <rosparam param="initial_state">[0.0,  0.0,  0.0,
+                                    0.0,  0.0,  0.0,
+                                    0.0,  0.0,  0.0,
+                                    0.0,  0.0,  0.0,
+                                    0.0,  0.0,  0.0]</rosparam>
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+  </node>
+
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+    <remap from="imu/data" to="imu"/>
+    <remap from="/gps/fix" to="/gps/fix"/>
+    <param name="wait_for_datum" value="true"/>
+    <param name="yaw_offset" value="0.0" />
+    <param name="magnetic_declination_radians" value="0.0" />
+    <rosparam param="datum">[50.68123222949611, 10.932769775390625, 0.0]</rosparam> 
+  </node-->
+
+
+
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="laser_filter">
+    <rosparam command="load" file="$(find panther_simulation)/config/laser_sector_filter.yaml" />
+  </node>
+
+    <!--  ************** obstacle_detector **************  -->
+  <include file="$(find panther_simulation)/launch/obstacle_detection.launch" if="$(arg obstacle_detect)">
+    <arg name="scan_topic" value="scan_filtered" />
+    <!--arg name="scan_topic" default="laser/front/scan" /-->
+  </include>
+
+
+
+  <!--  ************** move_base **************  -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    
+    <!-- Costmap parameters -->
+    <rosparam file="$(find panther_simulation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find panther_simulation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    
+    <!-- static global costmap, static map provides size -->
+    <rosparam file="$(find panther_simulation)/config/global_costmap_params.yaml" command="load" />
+    
+    <!-- local costmap, needs size -->
+    <rosparam file="$(find panther_simulation)/config/local_costmap_params.yaml" command="load" />
+    <param name="local_costmap/width" value="5.0"/>
+    <param name="local_costmap/height" value="5.0"/>
+
+    <!-- Planner (Global and local -planner) parameters -->
+    <rosparam file="$(find panther_simulation)/config/planner_sim_params.yaml" command="load"/>
+
+    <!-- Global Planner -->
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" /> 
+
+    <!-- Local Planner -->
+    <!--<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>-->
+    <param name="base_local_planner" value="geo_local_planner/GeoPlannerROS"/>
+    <rosparam file="$(find geo_local_planner)/params/geo_local_planner_params.yaml" command="load" />
+    <!--<param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>-->
+
+
+    <!-- teleop enabled-->
+    <remap from="cmd_vel" to="fake_cmd" if="$(arg use_teleop)" />    
+  </node>
+
+    <!-- rviz-->
+    <node if="$(arg use_rviz)" pkg="rviz" type="rviz" name="rviz" respawn="false" output="screen" args="-d $(arg rviz_config)" />
+
+</launch>

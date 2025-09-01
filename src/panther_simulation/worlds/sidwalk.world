@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="sidewalk_with_walls">
+    <!-- 默认物理属性 -->
+    <physics type="ode">
+      <gravity>0 0 -9.8</gravity>
+    </physics>
+
+    <!-- 添加地面 -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size> <!-- 地面大小 -->
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 添加人行道 -->
+    <model name="sidewalk">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>50 6 0.2</size> <!-- 人行道大小：长50米，宽6米，厚0.2米 -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>50 6 0.2</size>
+            </box>
+          </geometry>
+          <pose>0 0 0.1</pose> <!-- 抬高0.1米，避免与地面重叠 -->
+        </visual>
+      </link>
+    </model>
+
+    <!-- 添加左侧墙体 -->
+    <model name="left_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>50 0.5 2</size> <!-- 墙体大小：长50米，宽0.5米，高2米 -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>50 0.5 2</size>
+            </box>
+          </geometry>
+          <pose>0 -3.25 1</pose> <!-- 位置：左侧，中心高度为1米 -->
+        </visual>
+      </link>
+    </model>
+
+    <!-- 添加右侧墙体 -->
+    <model name="right_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>50 0.5 2</size> <!-- 墙体大小：长50米，宽0.5米，高2米 -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>50 0.5 2</size>
+            </box>
+          </geometry>
+          <pose>0 3.25 1</pose> <!-- 位置：右侧，中心高度为1米 -->
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
