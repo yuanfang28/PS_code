@@ -13,8 +13,8 @@ import time
 x  = MX.sym('x', 1)  # state
 u  = MX.sym('u', 4)  # control
 
-ns = 40  # number of point
-n_obs = 4 # number of obstacles
+ns = 20  # number of point
+n_obs = 5 # number of obstacles
 #n_obs = MX.sym('n_obs',1)
 
 
@@ -179,15 +179,16 @@ lt_coeff_val =    [0,0,0,2.5]
 rt_coeff_val =  [0,0,0,-2.5]
 
 #障碍物例子1 （问题定义部分的例图）
-# obs_val = np.array([4.2, 0.3,  0.7,  0.5 , np.pi/6,
-#                     7,  0.4,  0.7,  0.3, np.pi/4,
-#                     11.58, -0.81,  0.7,  0.4, np.pi/3,
-#                     10, 10, 0.01, 0.01,0,
-#                     10, 10, 0.01, 0.01,0])
+obs_val = np.array([4.2, 0.3,  0.7,  0.5 , np.pi/6,
+                    7,  0.4,  0.7,  0.3, np.pi/4,
+                    11.58, -0.81,  0.7,  0.4, np.pi/3,
+                    10, 10, 0.01, 0.01,0,
+                    10, 10, 0.01, 0.01,0])
 
 
 #障碍物例子2，多个障碍物,较为拥挤
-# obs_val = np.array([3.2, 2, 0.5, 0.5,0,
+#obs_val = np.array([
+#                     3.2, 2, 0.5, 0.5,0,
 #                     4, -2.5, 3, 0.6, 0,
 #                     4.2, 0.3, 0.7,  0.5 , np.pi/6,
 #                     5.5, 1.5, 0.6, 0.6, np.pi/2,
@@ -203,14 +204,14 @@ rt_coeff_val =  [0,0,0,-2.5]
 #                    10, 0.4, 1, 0.5, 0,
 #                    12, 0.4, 0.7, 0.4, np.pi/3,])
 
-obs_val = np.array([
-                    3.2, 1, 0.8, 0.5,np.pi/7,
-                    4.2, 0.5, 0.7,  0.5 , np.pi/6,
-                    9, 0, 1, 0.6, 0,
-                    #5.5, 1.5, 0.6, 0.6, np.pi/2,
-                    #7, 2.4, 0.7, 0.3, np.pi/4,
-                    #9, -1, 1, 0.5, 0,
-                    11.58, -0.81, 0.7, 0.4, np.pi/3,])
+# obs_val = np.array([
+#                     3.2, 1, 0.8, 0.5,np.pi/7,
+#                     4.2, 0.5, 0.7,  0.5 , np.pi/6,
+#                     9, 0, 1, 0.6, 0,
+#                     #5.5, 1.5, 0.6, 0.6, np.pi/2,
+#                     #7, 2.4, 0.7, 0.3, np.pi/4,
+#                     #9, -1, 1, 0.5, 0,
+#                     11.58, -0.81, 0.7, 0.4, np.pi/3,])
 
 #障碍物例子4，多个障碍物,分别集中在两侧
 #obs_val = np.array([2.3, 0.4, 0.5, 0.5,0,
@@ -338,25 +339,25 @@ for i in range(70):
          #ax.plot(f_up_x_values, f_up_y_values,color=color, label="Schritt {}".format(i) if i % 10 == 0 else "")
          ax.plot(f_down_x_values, f_down_y_values, color="blue", label="y_i,r")
 
-    #     ax.vlines(x=0, ymin=-3, ymax=3, colors="black", linestyle='--',lw=1)
-    #     ax.vlines(x=4, ymin=-3, ymax=3, colors="black", linestyle='--',lw=1)
-    #     ax.text(2, 2, "Sensor horizon", color="black", fontsize=12, ha="center")
+         ax.vlines(x=0, ymin=-3, ymax=3, colors="black", linestyle='--',lw=1)
+         ax.vlines(x=4, ymin=-3, ymax=3, colors="black", linestyle='--',lw=1)
+         ax.text(2, 2, "Sensor horizon", color="black", fontsize=12, ha="center")
 
-    #     # 在两端添加箭头
-    #     ax.annotate('', xy=(2.2, 1.8), xytext=(-0.1, 1.8), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 左箭头
-    #     ax.annotate('', xy=(1.8, 1.8), xytext=(4.1, 1.8), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 右箭头
+         # 在两端添加箭头
+         ax.annotate('', xy=(2.2, 1.8), xytext=(-0.1, 1.8), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 左箭头
+         ax.annotate('', xy=(1.8, 1.8), xytext=(4.1, 1.8), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 右箭头
 
-    #     #ax.vlines(x=14, ymin=-3, ymax=3, colors="black", linestyle='--',lw=1)
-    #     #ax.text(7, 1.5, "The whole optimization length", color="black", fontsize=12, ha="center")
+         ax.vlines(x=14, ymin=-3, ymax=3, colors="black", linestyle='--',lw=1)
+        #  ax.text(7, 1.5, "The whole optimization length", color="black", fontsize=12, ha="center")
 
-    #     # 在两端添加箭头
-    #     #ax.annotate('', xy=(7.2, 1.3), xytext=(-0.1, 1.3), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 左箭头
-    #     #ax.annotate('', xy=(6.8, 1.3), xytext=(14.1, 1.3), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 右箭头
+         # 在两端添加箭头
+        #  ax.annotate('', xy=(7.2, 1.3), xytext=(-0.1, 1.3), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 左箭头
+        #  ax.annotate('', xy=(6.8, 1.3), xytext=(14.1, 1.3), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 右箭头
 
-    #    # 在两端添加箭头
-    #     ax.annotate('', xy=(14.5, -0.1), xytext=(14.5, 2.6), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 左箭头
-    #     ax.annotate('', xy=(14.5, 0.1), xytext=(14.5, -2.6), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 右箭头
-    #     ax.text(14.7, -1.5, "Sidewalk width", color="black", fontsize=12, ha="center", rotation=-90)
+         # 在两端添加箭头
+         ax.annotate('', xy=(14.5, -0.1), xytext=(14.5, 2.6), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 左箭头
+         ax.annotate('', xy=(14.5, 0.1), xytext=(14.5, -2.6), arrowprops=dict(arrowstyle='<-', color="black",lw=2))  # 右箭头
+         ax.text(14.7, -1.5, "Sidewalk width", color="black", fontsize=12, ha="center", rotation=-90)
 
     
     else:
@@ -444,19 +445,9 @@ for j in range(n_obs):
 
 ax.set_aspect('equal', adjustable='datalim')
 ax.grid(True)
-ax.set_xlabel("X Position (m)")
-ax.set_ylabel("Y Position (m)")
-
-# 修改坐标轴字体大小
-plt.rcParams['xtick.labelsize'] = 15  # x轴标签的字号
-plt.rcParams['ytick.labelsize'] = 15  # y轴标签的字号
-
-
-# 修改轴标签的字体大小
-plt.rcParams['axes.labelsize'] = 13  # x轴和y轴标签的字号
-
-# 设置刻度字体大小
-ax.tick_params(axis='both', labelsize=13)
+ax.tick_params(axis='both', labelsize=16)  # 刻度数字
+ax.set_xlabel("X Position (m)", fontsize=16)  # 轴标签
+ax.set_ylabel("Y Position (m)", fontsize=16)
 
 
 # 创建一个新的图形窗口来绘制单独的图例

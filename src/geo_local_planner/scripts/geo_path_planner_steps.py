@@ -263,7 +263,8 @@ for i in range(70):
         ax.plot(f_down_x_values, f_down_y_values, color=color3, label="The right boundary of the robot's trajectory")
 
         # 添加标注第一次优化范围 (1 到 5)
-        ax.vlines(x=1, ymin=-3, ymax=3, colors="purple", linestyle="--", label="Optimization range (1 to 5)")
+        #ax.vlines(x=1, ymin=-3, ymax=3, colors="purple", linestyle="--", label="Optimization range (1 to 5)")
+        ax.vlines(x=1, ymin=-3, ymax=3, colors="purple", linestyle="--")
         ax.vlines(x=1, ymin=-3.2, ymax=3, colors="red", lw=1)
         ax.vlines(x=5, ymin=-3.2, ymax=3, colors="red", lw=1)
         ax.text(3, -2.8, "Opt.step i=1,x∈[1.0,5.0]", color="red", fontsize=12, ha="center")
@@ -415,20 +416,10 @@ for j in range(n_obs):
 
 ax.set_aspect('equal', adjustable='datalim')
 ax.grid(True)
-ax.set_xlabel("X Position (m)")
-ax.set_ylabel("Y Position (m)")
 
-# 修改坐标轴字体大小
-plt.rcParams['xtick.labelsize'] = 18  # x轴标签的字号
-plt.rcParams['ytick.labelsize'] = 18  # y轴标签的字号
-
-
-# 修改轴标签的字体大小
-plt.rcParams['axes.labelsize'] = 18  # x轴和y轴标签的字号
-
-# 设置刻度字体大小
-ax.tick_params(axis='both', labelsize=18)
-
+ax.tick_params(axis='both', labelsize=18)  # 刻度数字
+ax.set_xlabel("X Position (m)", fontsize=18)  # 轴标签
+ax.set_ylabel("Y Position (m)", fontsize=18)
 
 # ----Legends----
 

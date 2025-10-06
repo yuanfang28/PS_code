@@ -16,7 +16,7 @@ u  = MX.sym('u', 4)  # control
 
 #-------fine tuning parameters-------
 X_val = 4 #sensor detection range
-ns = 40  #number of point
+ns = 10  #number of point
 x_stepl = 0.2 #step length
 trav_dist = 70 #travel distance
 #n_obs = 7 # number of obstacles
@@ -35,8 +35,7 @@ trav_dist = 70 #travel distance
 #                    5.2, -0.4, 0.7,  0.5 , np.pi/6,
 #                    8.5, 0.4, 0.6, 0.6, np.pi/2,
 #                    12, -0.4, 0.7, 0.3, np.pi/4,])
-                   #11, -0.4, 1, 0.5, 0,
-                   #13, -0.4, 0.7, 0.4, np.pi/3,])
+
 
 # 障碍物case2，多个障碍物,集中在单侧
 # obs_val = np.array([2.3, 0.4, 0.5, 0.5,0,
@@ -57,16 +56,16 @@ trav_dist = 70 #travel distance
 #                     11.58, -0.81, 0.7, 0.4, np.pi/3,])
 
 # 障碍物case4，自然分布
-# obs_val = np.array([
-#                     3.2, 1, 0.8, 0.5,np.pi/7,
-#                     4.2, 0.5, 0.7,  0.5 , np.pi/6,
-#                     5,2.3,1,0.5,0,
-#                     7,-1.5,0.6,0.6, np.pi/2,
-#                     8, 0, 1, 0.6, 0,
-#                     #5.5, 1.5, 0.6, 0.6, np.pi/2,
-#                     #7, 2.4, 0.7, 0.3, np.pi/4,
-#                     #9, -1, 1, 0.5, 0,
-#                     11.58, -0.81, 0.7, 0.4, np.pi/3,])
+obs_val = np.array([
+                    3.2, 1, 0.8, 0.5,np.pi/7,
+                    4.2, 0.5, 0.7,  0.5 , np.pi/6,
+                    5,2.3,1,0.5,0,
+                    7,-1.5,0.6,0.6, np.pi/2,
+                    8, 0, 1, 0.6, 0,
+                    #5.5, 1.5, 0.6, 0.6, np.pi/2,
+                    #7, 2.4, 0.7, 0.3, np.pi/4,
+                    #9, -1, 1, 0.5, 0,
+                    11.58, -0.81, 0.7, 0.4, np.pi/3,])
 
 # 障碍物case5，自然分布
 
@@ -82,21 +81,21 @@ trav_dist = 70 #travel distance
 #                     ])
 
 # 障碍物case6，自然分布,行道树
-obs_val = np.array([                       
-                    1, 2, 0.5, 0.5,0,
-                    1,-2,0.5,0.5,0,
-                    4, 2, 0.5, 0.5,0,
-                    4,-2,0.5,0.5,0,
-                    4,0.8,1,0.5,0,
-                    7, 2, 0.5, 0.5,0,
-                    7,-2,0.5,0.5,0,
-                    8.5,1.5,1,1.3,0,
-                    10, 2, 0.5, 0.5,0,
-                    10,-2,0.5,0.5,0,
-                    12,-0.8,0.8,0.3,np.pi/6,
-                    13, 2, 0.5, 0.5,0,
-                    13,-2,0.5,0.5,0,
-                    ])
+# obs_val = np.array([                       
+#                     1, 2, 0.5, 0.5,0,
+#                     1,-2,0.5,0.5,0,
+#                     4, 2, 0.5, 0.5,0,
+#                     4,-2,0.5,0.5,0,
+#                     4,0.8,1,0.5,0,
+#                     7, 2, 0.5, 0.5,0,
+#                     7,-2,0.5,0.5,0,
+#                     8.5,1.5,1,1.3,0,
+#                     10, 2, 0.5, 0.5,0,
+#                     10,-2,0.5,0.5,0,
+#                     12,-0.8,0.8,0.3,np.pi/6,
+#                     13, 2, 0.5, 0.5,0,
+#                     13,-2,0.5,0.5,0,
+#                     ])
 
 #障碍物例子，比较N
 
@@ -470,18 +469,10 @@ for j in range(n_obs):
 
 ax.set_aspect('equal', adjustable='datalim')
 ax.grid(True)
-ax.set_xlabel("X Position (m)")
-ax.set_ylabel("Y Position (m)")
+ax.tick_params(axis='both', labelsize=16)  # 刻度数字
+ax.set_xlabel("X Position (m)", fontsize=16)  # 轴标签
+ax.set_ylabel("Y Position (m)", fontsize=16)
 
-# 修改坐标轴字体大小
-plt.rcParams['xtick.labelsize'] = 15  # x轴标签的字号
-plt.rcParams['ytick.labelsize'] = 15  # y轴标签的字号
-
-# 修改轴标签的字体大小
-plt.rcParams['axes.labelsize'] = 13  # x轴和y轴标签的字号
-
-# 设置刻度字体大小
-ax.tick_params(axis='both', labelsize=13)
 
 # 创建一个新的图形窗口来绘制单独的图例
 #fig_legend = plt.figure()
@@ -535,9 +526,10 @@ plt.show()
 # 绘制耗时曲线
 plt.figure()
 plt.plot(solve_times, marker='o')
-plt.xlabel("Optimization step")
-plt.ylabel("Solve time (s)")
-plt.title("Ipopt solve time per step")
+plt.xlabel("Optimization step", fontsize=21)  
+plt.ylabel("Solve time (s)", fontsize=21)
+plt.xticks(fontsize=21)
+plt.yticks(fontsize=21)
 plt.grid(True)
 for i, t in enumerate(solve_times):
     plt.text(i, t, f"{t:.3f}", ha='center', va='bottom', fontsize=8, rotation=45)
