@@ -501,20 +501,20 @@ ax.yaxis.set_major_locator(ticker.MultipleLocator(1))  # 设置 y 轴刻度间�
 # 显示图形
 #plt.tight_layout()
 
-# 读取图片
-img = mpimg.imread('/Users/liuyuanfang/Studium/24-25WS/Obstacle avoiding/Samples/Bildschirmfoto 2025-03-18 um 13.47.12.png')
+# 读取图片 biyao
+#img = mpimg.imread('/Users/liuyuanfang/Studium/24-25WS/Obstacle avoiding/Samples/Bildschirmfoto 2025-03-18 um 13.47.12.png')
 
 # 创建绘图
 #fig, ax = plt.subplots()
 
-# 插入图片，设置图片显示的位置和尺寸 (这里以1x1的比例放在原点)
-image = ax.imshow(img, extent=[-0.5, 0.5, -0.5, 0.5])
+# 插入图片，设置图片显示的位置和尺寸 (这里以1x1的比例放在原点) biyao
+#image = ax.imshow(img, extent=[-0.5, 0.5, -0.5, 0.5])
 
-# # 设置旋转变换，顺时针旋转90度
-transform = Affine2D().rotate_deg(-90) + ax.transData
+# 设置旋转变换，顺时针旋转90度 biyao
+#transform = Affine2D().rotate_deg(-90) + ax.transData
 
-# # 将变换应用到图片上
-image.set_transform(transform)
+# 将变换应用到图片上 biyao
+#image.set_transform(transform)
 
 # 设定坐标轴范围
 #ax.set_xlim([-5, 5])
